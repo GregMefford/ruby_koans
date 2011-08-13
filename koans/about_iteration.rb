@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 class AboutIteration < EdgeCase::Koan
 
   def test_each_is_a_method_on_arrays
-    [].methods.include?("each")
+    assert_equal __, [].methods.include?(:each)
   end
 
   def test_iterating_with_each
@@ -12,7 +12,7 @@ class AboutIteration < EdgeCase::Koan
     array.each do |item|
       sum += item
     end
-    assert_equal 6, sum
+    assert_equal __, sum
   end
 
   def test_each_can_use_curly_brace_blocks_too
@@ -65,7 +65,7 @@ class AboutIteration < EdgeCase::Koan
     result = [2, 3, 4].inject(0) { |sum, item| sum + item }
     assert_equal __, result
 
-    result2 = [2, 3, 4].inject(1) { |sum, item| sum * item }
+    result2 = [2, 3, 4].inject(1) { |product, item| product * item }
     assert_equal __, result2
 
     # Extra Credit:
@@ -78,13 +78,26 @@ class AboutIteration < EdgeCase::Koan
     assert_equal __, result
 
     # Files act like a collection of lines
-    upcase_lines = File.open("example_file.txt") do |file|
-      file.map { |line| line.strip.upcase }
+    File.open("example_file.txt") do |file|
+      upcase_lines = file.map { |line| line.strip.upcase }
+      assert_equal __, upcase_lines
     end
-    assert_equal __, upcase_lines
 
     # NOTE: You can create your own collections that work with each,
     # map, select, etc.
   end
+
+  # Bonus Question:  In the previous koan, we saw the construct:
+  #
+  #   File.open(filename) do |file|
+  #     # code to read 'file'
+  #   end
+  #
+  # Why did we do it that way instead of the following?
+  #
+  #   file = File.open(filename)
+  #   # code to read 'file'
+  #
+  # When you get to the "AboutSandwichCode" koan, recheck your answer.
 
 end

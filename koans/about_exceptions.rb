@@ -22,12 +22,12 @@ class AboutExceptions < EdgeCase::Koan
 
     assert_equal __, result
 
-    assert ex.is_a?(StandardError), "Failure message."
-    assert ex.is_a?(RuntimeError), "Failure message."
+    assert_equal __, ex.is_a?(StandardError), "Should be a Standard Error"
+    assert_equal __, ex.is_a?(RuntimeError),  "Should be a Runtime Error"
 
     assert RuntimeError.ancestors.include?(StandardError),
       "RuntimeError is a subclass of StandardError"
-    
+
     assert_equal __, ex.message
   end
 
@@ -55,6 +55,14 @@ class AboutExceptions < EdgeCase::Koan
     end
 
     assert_equal __, result
+  end
+
+  # Sometimes, we must know about the unknown
+  def test_asserting_an_error_is_raised
+    # A do-end is a block, a topic to explore more later
+    assert_raise(___) do
+      raise MySpecialError.new("New instances can be raised directly.")
+    end
   end
 
 end

@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 def my_global_method(a,b)
   a + b
 end
-  
+
 class AboutMethods < EdgeCase::Koan
 
   def test_calling_global_methods
@@ -29,7 +29,7 @@ class AboutMethods < EdgeCase::Koan
     # Rewrite the eval string to continue.
     #
   end
-  
+
   # NOTE: wrong number of argument is not a SYNTAX error, but a
   # runtime error.
   def test_calling_global_methods_with_wrong_number_of_arguments
@@ -92,16 +92,16 @@ class AboutMethods < EdgeCase::Koan
 
   # ------------------------------------------------------------------
 
-  def my_same_class_method(a, b)
+  def my_method_in_the_same_class(a, b)
     a * b
   end
 
   def test_calling_methods_in_same_class
-    assert_equal __, my_same_class_method(3,4)
+    assert_equal __, my_method_in_the_same_class(3,4)
   end
 
   def test_calling_methods_in_same_class_with_explicit_receiver
-    assert_equal __, self.my_same_class_method(3,4)
+    assert_equal __, self.my_method_in_the_same_class(3,4)
   end
 
   # ------------------------------------------------------------------
@@ -135,7 +135,7 @@ class AboutMethods < EdgeCase::Koan
       "tail"
     end
   end
-  
+
   def test_calling_methods_in_other_objects_require_explicit_receiver
     rover = Dog.new
     assert_equal __, rover.name

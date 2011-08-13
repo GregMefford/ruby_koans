@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 def my_global_method(a,b)
   a + b
 end
-  
+
 class AboutMethods < EdgeCase::Koan
 
   def test_calling_global_methods
@@ -19,10 +19,10 @@ class AboutMethods < EdgeCase::Koan
   # considered to be syntactically invalid).
   def test_sometimes_missing_parentheses_are_ambiguous
     #--
-    eval "assert_equal 5, my_global_method(2, 3)" # REMOVE CHECK
+    eval "assert_equal 5, my_global_method(2, 3)" # REMOVE CHECK # __
     if false
       #++
-    eval "assert_equal 5, my_global_method 2, 3" # ENABLE CHECK
+    eval "assert_equal 5, my_global_method 2, 3" # ENABLE CHECK # __
       #--
     end
     #++
@@ -36,19 +36,22 @@ class AboutMethods < EdgeCase::Koan
     # Rewrite the eval string to continue.
     #
   end
-  
+
   # NOTE: wrong number of argument is not a SYNTAX error, but a
   # runtime error.
   def test_calling_global_methods_with_wrong_number_of_arguments
     exception = assert_raise(___(ArgumentError)) do
       my_global_method
     end
-    assert_match(/#{__("wrong number of arguments")}/, exception.message)
+    #--
+    pattern = "wrong (number|#) of arguments"
+    #++
+    assert_match(/#{__(pattern)}/, exception.message)
 
     exception = assert_raise(___(ArgumentError)) do
       my_global_method(1,2,3)
     end
-    assert_match(/#{__("wrong number of arguments")}/, exception.message)
+    assert_match(/#{__(pattern)}/, exception.message)
   end
 
   # ------------------------------------------------------------------
@@ -99,16 +102,16 @@ class AboutMethods < EdgeCase::Koan
 
   # ------------------------------------------------------------------
 
-  def my_same_class_method(a, b)
+  def my_method_in_the_same_class(a, b)
     a * b
   end
 
   def test_calling_methods_in_same_class
-    assert_equal __(12), my_same_class_method(3,4)
+    assert_equal __(12), my_method_in_the_same_class(3,4)
   end
 
   def test_calling_methods_in_same_class_with_explicit_receiver
-    assert_equal __(12), self.my_same_class_method(3,4)
+    assert_equal __(12), self.my_method_in_the_same_class(3,4)
   end
 
   # ------------------------------------------------------------------
@@ -142,7 +145,7 @@ class AboutMethods < EdgeCase::Koan
       "tail"
     end
   end
-  
+
   def test_calling_methods_in_other_objects_require_explicit_receiver
     rover = Dog.new
     assert_equal __("Fido"), rover.name
